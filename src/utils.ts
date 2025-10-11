@@ -120,3 +120,100 @@ export function cleanupMessages(messages: UIMessage[]): UIMessage[] {
     return !hasIncompleteToolCall;
   });
 }
+
+/**
+ * Job Search Utility Functions
+ */
+
+/**
+ * Extract key skills from CV content
+ */
+export function extractSkillsFromCV(cvContent: string): string[] {
+  const commonSkills = [
+    'JavaScript', 'TypeScript', 'React', 'Node.js', 'Python', 'Java', 'C++', 'C#',
+    'HTML', 'CSS', 'Angular', 'Vue.js', 'PHP', 'Ruby', 'Go', 'Rust', 'Swift',
+    'AWS', 'Azure', 'Google Cloud', 'Docker', 'Kubernetes', 'Git', 'SQL', 'MongoDB',
+    'PostgreSQL', 'MySQL', 'Redis', 'GraphQL', 'REST API', 'Microservices',
+    'Machine Learning', 'AI', 'Data Science', 'DevOps', 'CI/CD', 'Jenkins',
+    'Terraform', 'Ansible', 'Linux', 'Agile', 'Scrum', 'Project Management'
+  ];
+
+  const foundSkills = commonSkills.filter(skill => 
+    cvContent.toLowerCase().includes(skill.toLowerCase())
+  );
+
+  return foundSkills;
+}
+
+/**
+ * Generate email subject line for job application
+ */
+export function generateEmailSubject(jobTitle: string, companyName: string, applicantName: string): string {
+  return `Application for ${jobTitle} Position - ${applicantName}`;
+}
+
+/**
+ * Generate professional email body for job application
+ */
+export function generateApplicationEmailBody(
+  jobTitle: string, 
+  companyName: string, 
+  recruiterName?: string
+): string {
+  const greeting = recruiterName ? `Dear ${recruiterName},` : "Dear Hiring Manager,";
+  
+  return `${greeting}
+
+I hope this email finds you well. I am writing to submit my application for the ${jobTitle} position at ${companyName}.
+
+I have attached my resume and cover letter for your review. I am excited about the opportunity to contribute to ${companyName} and believe my skills and experience align well with the requirements for this role.
+
+I would welcome the opportunity to discuss my qualifications further and am available for an interview at your convenience.
+
+Thank you for considering my application. I look forward to hearing from you.
+
+Best regards,
+[Your Name]`;
+}
+
+/**
+ * Calculate job match score based on skills overlap
+ */
+export function calculateJobMatchScore(
+  cvSkills: string[], 
+  jobRequirements: string[]
+): number {
+  if (jobRequirements.length === 0) return 0;
+  
+  const matchingSkills = cvSkills.filter(skill => 
+    jobRequirements.some(req => 
+      req.toLowerCase().includes(skill.toLowerCase()) ||
+      skill.toLowerCase().includes(req.toLowerCase())
+    )
+  );
+  
+  return Math.round((matchingSkills.length / jobRequirements.length) * 100);
+}
+
+/**
+ * Format salary range for display
+ */
+export function formatSalaryRange(min: number, max: number, currency = "$"): string {
+  const formatNumber = (num: number) => {
+    if (num >= 1000000) {
+      return `${(num / 1000000).toFixed(1)}M`;
+    } else if (num >= 1000) {
+      return `${(num / 1000).toFixed(0)}K`;
+    }
+    return num.toString();
+  };
+  
+  return `${currency}${formatNumber(min)} - ${currency}${formatNumber(max)}`;
+}
+
+/**
+ * Generate application tracking ID
+ */
+export function generateApplicationId(): string {
+  return `app_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+}
