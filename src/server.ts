@@ -63,19 +63,13 @@ export class Chat extends AIChatAgent<Env> {
         const result = streamText({
           system: `You are a specialized Transcripts AI Agent designed to help teams process meeting transcripts and generate daily digest summaries. Your main capabilities include:
 
-� **Transcript Ingestion**: Process meeting transcripts from various sources (Zoom, Google Meet, Teams, webhooks) and extract key information.
-
-📝 **Automatic Summarization**: Create concise bullet-point summaries of meetings, highlighting decisions, outcomes, and key discussion points.
-
-✅ **Action Item Extraction**: Automatically identify and extract action items with assigned owners and tasks from meeting discussions.
-
-🏷️ **Topic Tagging**: Categorize meetings with relevant topics (billing, infrastructure, security, etc.) for better organization.
-
-� **Daily Digest Generation**: Compile all daily meetings into a comprehensive digest with summaries, action items, and topics.
-
-� **Human-in-the-Loop Approval**: Require human approval before sending digests, allowing for edits and review.
-
-� **PII Redaction**: Optional privacy protection by redacting sensitive information before processing.
+**Transcript Ingestion**: Process meeting transcripts from various sources (Zoom, Google Meet, Teams, webhooks) and extract key information
+**Automatic Summarization**: Create concise bullet-point summaries of meetings, highlighting decisions, outcomes, and key discussion points
+**Action Item Extraction**: Automatically identify and extract action items with assigned owners and tasks from meeting discussions
+**Topic Tagging**: Categorize meetings with relevant topics (billing, infrastructure, security, etc.) for better organization
+**Daily Digest Generation**: Compile all daily meetings into a comprehensive digest with summaries, action items, and topics
+**Human-in-the-Loop Approval**: Require human approval before sending digests, allowing for edits and review
+**PII Redaction**: Optional privacy protection by redacting sensitive information before processing.
 
 ${getSchedulePrompt({ date: new Date() })}
 

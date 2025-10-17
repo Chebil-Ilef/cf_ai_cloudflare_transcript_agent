@@ -1,4 +1,4 @@
-# 📄 Transcripts Agent
+# Transcripts Agent
 
 **AI-powered meeting transcript processing and daily digest generation** built with [Cloudflare Agents SDK](https://github.com/cloudflare/agents-sdk) and deployed on Cloudflare Workers.
 
@@ -6,9 +6,9 @@ Transform your meeting transcripts into actionable insights with automated summa
 
 ---
 
-## ✨ Features
+## Features
 
-### 📄 Transcript Processing
+### Transcript Processing
 
 - **Multi-source ingestion**: Support for Zoom, Google Meet, Teams, webhooks, and manual uploads
 - **Automatic summarization**: AI-powered bullet-point summaries highlighting decisions and outcomes
@@ -16,21 +16,21 @@ Transform your meeting transcripts into actionable insights with automated summa
 - **Topic tagging**: Categorize meetings with relevant tags (billing, infrastructure, security, etc.)
 - **PII redaction**: Optional privacy protection by removing sensitive information
 
-### 📊 Daily Digest Generation
+### Daily Digest Generation
 
 - **Team-based organization**: Separate digests for different teams
 - **Automated compilation**: Daily aggregation of all meetings with summaries and action items
 - **Human-in-the-loop approval**: Review and edit digests before sending
 - **Email delivery**: Send approved digests to team members and stakeholders
 
-### 🔄 Workflow Automation
+### Workflow Automation
 
 - **Scheduled processing**: Set up daily digest finalization at specific times
 - **Real-time processing**: Process transcripts as they're received via webhooks
 - **Approval workflows**: Require human confirmation for sensitive operations
 - **Persistent storage**: Maintain digest history using Cloudflare Durable Objects and KV
 
-### 🛡️ Enterprise Ready
+### Enterprise Ready
 
 - **Scalable architecture**: Built on Cloudflare's global edge network
 - **Security first**: HMAC signature verification for webhooks
@@ -39,13 +39,11 @@ Transform your meeting transcripts into actionable insights with automated summa
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### 1. Clone and Setup
 
 ```bash
-git clone https://github.com/Chebil-Ilef/ysf-clouddflare.git
-cd ysf-clouddflare
 npm install
 ```
 
@@ -80,16 +78,16 @@ npx wrangler secret bulk .dev.vars
 
 ---
 
-## 📖 How to Use
+## How to Use
 
-### 📄 Processing Transcripts
+### Processing Transcripts
 
 1. **Upload transcript**: Provide meeting details and transcript text
 2. **AI Processing**: Automatic summarization and action item extraction
 3. **Review results**: Check generated summaries and extracted action items
 4. **Confirm processing**: Approve the processing to add to daily digest
 
-### 📊 Managing Daily Digests
+### Managing Daily Digests
 
 1. **View digest**: Check the daily compilation of all processed meetings
 2. **Review content**: Verify summaries, action items, and topic tags
@@ -97,14 +95,14 @@ npx wrangler secret bulk .dev.vars
 4. **Approve digest**: Mark digest as ready for sending
 5. **Send to team**: Deliver via email to configured recipients
 
-### 🔄 Setting Up Automation
+### Setting Up Automation
 
 1. **Configure webhooks**: Set up meeting platforms to send transcripts automatically
 2. **Schedule digests**: Set daily finalization times (e.g., 8:00 AM)
 3. **Team organization**: Configure separate teams with different recipients
 4. **Approval workflows**: Set up human-in-the-loop confirmation processes
 
-### 💡 Example Conversations
+### Example Conversations
 
 **Processing a Transcript**:
 
@@ -161,7 +159,7 @@ Agent: "I'll mark the digest as approved and send it to the configured team reci
 
 ---
 
-## 🔧 Configuration
+## Configuration
 
 ### Cloudflare Bindings (wrangler.jsonc)
 
@@ -260,85 +258,3 @@ await fetch("/send", {
 ```
 
 ---
-
-## 🌟 Advanced Features
-
-### Custom AI Models
-
-You can use different AI providers by modifying the model configuration in `src/server.ts`:
-
-```typescript
-// Switch to different OpenAI models
-const model = openai("gpt-4-turbo");
-
-// Or use Cloudflare Workers AI
-import { createCloudflareAI } from "@ai-sdk/cloudflare";
-const cloudflare = createCloudflareAI({ apiToken: env.CLOUDFLARE_API_TOKEN });
-const model = cloudflare("@cf/meta/llama-3.1-8b-instruct");
-```
-
-### Multi-team Configuration
-
-Set up different teams with separate configurations:
-
-```typescript
-// Team-specific recipients
-const teamRecipients = {
-  engineering: ["eng-team@company.com"],
-  marketing: ["marketing-team@company.com"],
-  sales: ["sales-team@company.com"]
-};
-
-// Team-specific processing rules
-const teamRules = {
-  engineering: {
-    requiresPII: false,
-    topicTags: ["tech", "sprint", "deployment"]
-  },
-  sales: { requiresPII: true, topicTags: ["deals", "customers", "revenue"] }
-};
-```
-
----
-
-## 🤝 Contributing
-
-We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
-
-### Development Setup
-
-```bash
-# Install dependencies
-npm install
-
-# Start development server
-npm run dev
-
-# Run tests
-npm test
-
-# Format code
-npm run format
-
-# Lint code
-npm run lint
-```
-
----
-
-## 📜 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-## 🔗 Links
-
-- **Live Demo**: [transcripts-agent.your-subdomain.workers.dev](https://transcripts-agent.your-subdomain.workers.dev)
-- **Documentation**: [Cloudflare Agents SDK](https://github.com/cloudflare/agents-sdk)
-- **Issues**: [GitHub Issues](https://github.com/Chebil-Ilef/ysf-clouddflare/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/Chebil-Ilef/ysf-clouddflare/discussions)
-
----
-
-**Built with ❤️ using Cloudflare Agents SDK**
