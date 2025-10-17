@@ -127,7 +127,7 @@ Agent: "I'll mark the digest as approved and send it to the configured team reci
 
 ---
 
-## 🛠️ Project Structure
+## Project Structure
 
 ```
 ├── src/
@@ -203,58 +203,3 @@ Agent: "I'll mark the digest as approved and send it to the configured team reci
 | `WEBHOOK_SECRET`     | Yes      | HMAC secret for webhook verification       |
 | `DEFAULT_RECIPIENTS` | No       | Default email recipients (comma-separated) |
 
----
-
-## 🔌 Integration Examples
-
-### Webhook Integration
-
-```bash
-# Send transcript via webhook
-curl -X POST https://your-agent.your-subdomain.workers.dev/ingest \
-  -H "Content-Type: application/json" \
-  -H "X-Signature: sha256=your_hmac_signature" \
-  -d '{
-    "transcript": {
-      "id": "meeting-123",
-      "meetingId": "zoom-456",
-      "title": "Sprint Planning",
-      "dateISO": "2025-01-15",
-      "participants": ["Alice", "Bob", "Charlie"],
-      "text": "Meeting transcript content...",
-      "source": "zoom"
-    },
-    "teamId": "engineering"
-  }'
-```
-
-### API Access
-
-```javascript
-// Get daily digest
-const digest = await fetch("/digest?team=engineering&date=2025-01-15");
-
-// Approve digest
-await fetch("/approve", {
-  method: "POST",
-  body: JSON.stringify({
-    teamId: "engineering",
-    dateISO: "2025-01-15",
-    edits: {
-      /* optional modifications */
-    }
-  })
-});
-
-// Send digest
-await fetch("/send", {
-  method: "POST",
-  body: JSON.stringify({
-    teamId: "engineering",
-    dateISO: "2025-01-15",
-    to: "team-lead@company.com"
-  })
-});
-```
-
----
