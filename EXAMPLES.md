@@ -1,245 +1,408 @@
-# Job Search Agent - Example Workflows
+# Transcripts Agent - Example Workflows
 
-This document shows example conversations and workflows with the Job Search AI Agent.
+This document shows example conversations and workflows with the Transcripts AI Agent.
 
-## 🔍 Job Search Workflow
+## 📄 Transcript Processing Workflow
 
-### Basic Job Search
+### Processing a Single Meeting Transcript
+
 ```
-User: "I'm looking for software engineering jobs"
+User: "I have a meeting transcript from our weekly standup to process"
 
-Agent: "I'd be happy to help you find software engineering positions! To provide the best matches, I'll need some information:
+Agent: "I'll help you process that meeting transcript! To get started, I need:
 
-1. Could you share your CV or key qualifications?
-2. What's your preferred location (or are you open to remote work)?
-3. What's your experience level?
-4. Any specific salary range you're targeting?"
+1. Meeting details (title, date, participants)
+2. The full transcript text
+3. Source platform (Zoom, Google Meet, Teams, etc.)
 
-User: "I have 5 years of experience in React, Node.js, and AWS. I'm open to remote work and looking for $100k-130k"
+Please provide the meeting information and transcript content."
 
-Agent: "Great! Let me search for remote software engineering positions that match your React, Node.js, and AWS experience in the $100k-130k range. 
+User: "Here's the meeting info:
+Title: Engineering Weekly Standup
+Date: 2025-01-15
+Participants: Alice (Engineering Manager), Bob (Senior Dev), Charlie (Junior Dev)
+Source: Zoom
 
-*[Agent uses searchJobs tool]*
+Transcript:
+Alice: Good morning everyone, let's start with our weekly standup...
+Bob: I completed the authentication module this week...
+Charlie: I'm working on the user dashboard, should be done by Friday..."
 
-Would you like me to search for jobs matching these criteria?"
+Agent: "I'll process this transcript to extract summaries and action items. Let me analyze the content..."
 
-User: "Yes, please search"
+*[Uses ingestMeetingTranscript tool]*
 
-Agent: *[Returns top 10 matching jobs with details, match scores, and application links]*
-```
+"Processing complete! Here's what I extracted:
 
-### Advanced Job Search with Specific Requirements
-```
-User: "Find me senior frontend developer jobs in San Francisco or remote, focusing on React and TypeScript, with at least $120k salary"
+**Summary:**
+• Weekly standup covering authentication module completion and user dashboard progress
+• Authentication module completed by Bob this week
+• User dashboard development in progress, targeting Friday completion
 
-Agent: "I'll search for senior frontend developer positions with your specific requirements. Let me get your CV content first to ensure the best matches.
+**Action Items:**
+• Charlie: Complete user dashboard by Friday
+• Alice: Review authentication module (confidence: 85%)
 
-Could you share your CV or key qualifications?"
+**Topics:** engineering, standup, development
 
-User: *[Shares CV content]*
+Would you like me to add this to today's digest?"
 
-Agent: *[Initiates job search with specific criteria]*
-```
+User: "Yes, add it to the digest"
 
-## 📝 Cover Letter Generation Workflow
-
-### Generate Cover Letter for Specific Job
-```
-User: "Generate a cover letter for this job: [pastes job description]"
-
-Agent: "I'll create a personalized cover letter for this position. To make it truly tailored, I need:
-
-1. Your CV content
-2. The company name
-3. The specific job title
-4. Any specific recruiter name (optional)
-5. Preferred tone (professional, friendly, or formal)"
-
-User: *[Provides required information]*
-
-Agent: *[Generates custom cover letter using generateCoverLetter tool]*
-
-"Here's your personalized cover letter! You can:
-- Edit the content using the built-in editor
-- Download it as a PDF
-- Copy the text for your own use
-- Send it directly via email"
+Agent: "Added to daily digest for engineering team on 2025-01-15!"
 ```
 
-### PDF Generation and Email Sending
+### Batch Processing Multiple Transcripts
+
 ```
-User: "Convert this cover letter to PDF and email it to hiring@techcorp.com"
+User: "I have 3 meeting transcripts from today to process"
 
-Agent: "I'll help you create a PDF version and send your application. Let me:
+Agent: "I can help process multiple transcripts! You can either:
+1. Process them one by one for detailed review
+2. Batch process them all at once
 
-1. Generate a PDF of your cover letter
-2. Prepare an email with your CV and cover letter attached
+Which would you prefer? Also, please provide the transcript details."
 
-*[Uses generatePDFCoverLetter tool]*
+User: "Batch process them all. Here are the meetings:
+1. Morning standup (engineering team)
+2. Product review meeting
+3. Client feedback session"
 
-Would you like me to send the application email to hiring@techcorp.com with both attachments?"
+Agent: *[Processes each transcript using ingestMeetingTranscript tool]*
 
-User: "Yes, send it"
+"Successfully processed all 3 transcripts! Here's the summary:
 
-Agent: *[Uses sendApplicationEmail tool to send the complete application]*
-```
+**Morning Standup:** 4 action items extracted, topics: engineering, sprint
+**Product Review:** 2 action items extracted, topics: product, design
+**Client Feedback:** 6 action items extracted, topics: customer, feedback, priorities
 
-## 📊 Job Market Analysis Workflow
-
-### Market Research
-```
-User: "What's the job market like for React developers?"
-
-Agent: *[Uses analyzeJobMarket tool automatically]*
-
-"Here's the current job market analysis for React developers:
-
-📈 **Market Overview**
-- Total jobs available: 3,247
-- Average salary: $95,000
-- Growth trend: Increasing
-- Competition level: Medium
-
-🔧 **Top Skills in Demand**
-- React, TypeScript, Node.js, AWS, GraphQL
-
-🏢 **Top Hiring Companies**
-- TechCorp, StartupXYZ, BigTech Inc, etc.
-
-💡 **Market Insights**
-- Remote opportunities are increasing
-- Full-stack skills are highly valued
-- AI/ML knowledge is becoming more important"
+All have been added to today's digest. Total: 12 action items identified across 3 meetings."
 ```
 
-### Location-Specific Analysis
+## 📊 Daily Digest Management Workflow
+
+### Viewing and Approving Daily Digest
+
 ```
-User: "Analyze the job market for Python developers in New York"
+User: "Show me today's digest for the engineering team"
 
-Agent: *[Provides detailed analysis for Python developers specifically in New York market]*
-```
+Agent: *[Uses getDailyDigest tool]*
 
-## 📋 Application Tracking Workflow
+"Here's today's digest for engineering team (2025-01-15):
 
-### Adding and Managing Applications
-```
-User: "Track my application to Microsoft for Software Engineer role"
+**Meetings Processed:** 3
+- Engineering Weekly Standup
+- Architecture Review Session
+- Sprint Planning Meeting
 
-Agent: *[Uses trackApplication tool to add new application]*
+**Key Summaries:**
+• Authentication module completed and ready for review
+• New microservice architecture approved for Q2 implementation
+• Sprint goals defined with 15 story points committed
 
-"I've added your Microsoft Software Engineer application to your tracker! 
+**Action Items (8 total):**
+• Charlie: Complete user dashboard by Friday
+• Bob: Set up CI/CD pipeline for new service by next week
+• Alice: Schedule architecture review with senior staff
+• Team: Begin sprint tasks as assigned in Jira
 
-Current status: Applied
-Application date: Today
-Notes: You can add interview dates, follow-up reminders, etc.
+**Topics:** engineering, sprint, architecture, authentication
 
-Would you like me to:
-- Set a follow-up reminder?
-- View all your applications?
-- Update the status later?"
-```
+**Status:** ⏳ Pending Approval
 
-### Viewing Application Pipeline
-```
-User: "Show me all my job applications"
+Would you like me to approve and send this digest?"
 
-Agent: *[Uses trackApplication tool to list all applications]*
+User: "Yes, approve and send it to the team"
 
-"Here's your complete application pipeline:
+Agent: "I'll approve this digest and send it to the engineering team. Please confirm:"
 
-**📊 Application Statistics**
-- Total: 8 applications
-- Applied: 3
-- Screening: 2  
-- Interview: 2
-- Offers: 1
-- Rejected: 0
+*[Uses approveDailyDigest tool - requires confirmation]*
 
-**📋 Recent Applications**
-1. Microsoft - Software Engineer (Interview scheduled)
-2. Google - Frontend Developer (Screening)
-3. Netflix - Full Stack Developer (Applied)
-..."
+User: "Confirmed"
+
+Agent: "Digest approved! Now sending to team..."
+
+*[Uses sendApprovedDigest tool - requires confirmation]*
+
+"Daily digest sent successfully to engineering team members!"
 ```
 
-### Updating Application Status
+### Editing Digest Before Approval
+
 ```
-User: "Update my Microsoft application - I have an interview scheduled for next Friday"
+User: "Show me today's digest but I want to edit it before sending"
 
-Agent: *[Updates application status and can set interview reminder]*
+Agent: *[Shows current digest]*
 
-"Great news about the interview! I've updated your Microsoft application:
-- Status changed to: Interview
-- Notes: Interview scheduled for next Friday
+"Here's today's digest. What would you like to edit?"
 
-Would you like me to:
-- Set a reminder before the interview?
-- Help you prepare interview questions?
-- Schedule a follow-up reminder?"
-```
+User: "The action item for Charlie should be due Monday, not Friday, and add a note that the authentication module needs security review"
 
-## 🔗 Complex Workflows
+Agent: "I'll update the digest with your edits:
+- Changed Charlie's due date from Friday to Monday
+- Added note about security review requirement for authentication module
 
-### End-to-End Job Application Process
-```
-User: "Help me apply to TechCorp's Senior Developer position"
+Would you like to approve the updated digest?"
 
-Agent: "I'll guide you through the complete application process:
-
-1. First, let me search for details about TechCorp's Senior Developer role
-2. Generate a tailored cover letter
-3. Create a PDF version
-4. Send the complete application
-5. Add it to your application tracker
-
-Let's start - could you share the job description or posting?"
-
-User: *[Shares job posting]*
-
-Agent: *[Walks through each step with confirmations]*
+*[Uses approveDailyDigest tool with edits]*
 ```
 
-### Job Search with Interview Scheduling
+## 🔄 Automation and Scheduling Workflow
+
+### Setting Up Daily Digest Automation
+
 ```
-User: "Find me jobs and schedule interviews for the best matches"
+User: "Set up automatic daily digest generation for 8:00 AM"
 
-Agent: "I'll help you find jobs and coordinate interviews:
+Agent: "I'll set up daily digest finalization for 8:00 AM. This will:
 
-1. Search for positions matching your profile
-2. Identify top 3-5 matches
-3. Generate cover letters for each
-4. Send applications
-5. Set follow-up reminders
-6. Schedule interview preparation sessions
+1. Compile all transcripts processed the previous day
+2. Generate the daily digest summary
+3. Prepare it for review and approval
 
-Let's start with your job search criteria..."
-```
+*[Uses scheduleDigestFinalization tool]*
 
-## 💡 Pro Tips for Using the Agent
+Automation configured! Every day at 8:00 AM, I'll:
+- Compile previous day's transcripts into a digest
+- Notify you for review and approval
+- Keep the digest ready for sending once approved
 
-### Best Practices
-1. **Be Specific**: Provide detailed requirements for better matches
-2. **Share Complete CV**: More information = better job matching
-3. **Review Before Sending**: Always review generated content before sending
-4. **Track Everything**: Use the application tracker for all applications
-5. **Set Reminders**: Schedule follow-ups and interview preparations
+You'll still need to manually approve and send each digest for quality control."
 
-### Sample CV Information to Share
-```
-"I'm a software engineer with 5 years of experience. My key skills include:
-- Frontend: React, TypeScript, Vue.js, HTML/CSS
-- Backend: Node.js, Python, Django, Express
-- Cloud: AWS, Docker, Kubernetes
-- Databases: PostgreSQL, MongoDB, Redis
-- Tools: Git, Jenkins, Webpack, Jest
+User: "Can I change this to 9:00 AM instead?"
 
-Previous roles:
-- Senior Frontend Developer at StartupXYZ (2022-2024)
-- Full Stack Developer at TechCorp (2020-2022)
-- Junior Developer at WebAgency (2019-2020)
+Agent: "Absolutely! I'll update the daily digest finalization to 9:00 AM."
 
-Education: Computer Science degree from State University
-Location: Open to remote work, based in California"
+*[Updates schedule]*
+
+"Updated! Daily digest finalization now scheduled for 9:00 AM."
 ```
 
-This comprehensive CV information helps the agent provide much better job matches and create more personalized cover letters.
+## 🔗 Webhook Integration Workflow
+
+### Setting Up Meeting Platform Integration
+
+````
+User: "How do I set up automatic transcript processing from Zoom?"
+
+Agent: "To set up automatic Zoom transcript processing:
+
+1. **Configure Zoom Webhook:**
+   - Go to Zoom Marketplace → Build App → Webhook Only
+   - Set endpoint URL: `https://your-agent.workers.dev/ingest`
+   - Subscribe to 'Recording Completed' event
+   - Add your webhook secret for security
+
+2. **Webhook Format:**
+```json
+{
+  "transcript": {
+    "id": "zoom-meeting-123",
+    "meetingId": "zoom-456",
+    "title": "Team Meeting",
+    "dateISO": "2025-01-15",
+    "participants": ["Alice", "Bob"],
+    "text": "transcript content...",
+    "source": "zoom"
+  },
+  "teamId": "engineering"
+}
+````
+
+3. **Security:**
+   - Include HMAC signature in `X-Signature` header
+   - Use your configured webhook secret
+
+Once configured, transcripts will be automatically processed and added to daily digests!"
+
+User: "What about Google Meet?"
+
+Agent: "For Google Meet, the process is similar but you'll need to:
+
+1. Use Google Meet API or third-party integrations
+2. Set up webhook with the same endpoint format
+3. Use 'meet' as the source field
+
+The transcript processing will work exactly the same once the webhook delivers the content!"
+
+```
+
+## 💡 Advanced Usage Patterns
+
+### Multi-Team Organization
+```
+
+User: "We have separate engineering and marketing teams. How do I organize their digests?"
+
+Agent: "Great! I support multi-team organization. Here's how to set it up:
+
+**When Processing Transcripts:**
+
+- Specify teamId: 'engineering' or 'marketing'
+- Each team gets separate digests
+
+**For Daily Digests:**
+
+- Engineering: `getDailyDigest` with teamId: 'engineering'
+- Marketing: `getDailyDigest` with teamId: 'marketing'
+
+**Example:**"
+
+_[Shows team-specific digest]_
+
+"Would you like me to process transcripts for a specific team, or show you both teams' digests?"
+
+User: "Show me both teams' digests for today"
+
+Agent: _[Retrieves both team digests]_
+
+"**Engineering Team (5 meetings):**
+
+- 12 action items, focused on sprint planning and technical architecture
+- Topics: development, infrastructure, testing
+
+**Marketing Team (3 meetings):**
+
+- 8 action items, focused on campaign planning and content creation
+- Topics: campaigns, content, analytics
+
+Both teams have pending digests ready for approval!"
+
+```
+
+### Topic-Based Analysis
+```
+
+User: "Show me all meetings tagged with 'security' from this week"
+
+Agent: "I can help analyze security-related meetings! While I don't have a direct search tool yet, I can:
+
+1. Review daily digests from this week
+2. Identify meetings with 'security' topic tags
+3. Compile security-related action items and decisions
+
+Let me check this week's digests..."
+
+_[Reviews recent digests]_
+
+"Found 3 security-related meetings this week:
+
+**Monday:** Security Review Session
+
+- Action: Implement 2FA by end of sprint (Bob)
+- Action: Security audit of API endpoints (Alice)
+
+**Wednesday:** Incident Response Planning
+
+- Action: Update incident playbooks (Security Team)
+- Action: Schedule quarterly security training (HR)
+
+**Friday:** Penetration Test Results
+
+- Action: Fix critical vulnerabilities by next week (Dev Team)
+- Action: Review access controls (DevOps)
+
+Total: 6 security action items identified this week."
+
+```
+
+## 🔧 Troubleshooting Common Issues
+
+### Processing Errors
+```
+
+User: "The transcript processing failed with an error"
+
+Agent: "Let me help troubleshoot the transcript processing issue. Can you tell me:
+
+1. What was the error message?
+2. What type of transcript were you processing?
+3. How long was the transcript content?
+
+Common issues and solutions:
+
+- **Content too long:** Transcripts over 300KB need to be split into chunks
+- **Invalid format:** Make sure all required fields (id, title, dateISO, text) are provided
+- **Character encoding:** Ensure transcript text is properly encoded UTF-8
+
+Please share the error details and I'll help resolve it!"
+
+User: "It said 'transcript too long' for a 2-hour meeting"
+
+Agent: "For long transcripts (2+ hours), I recommend:
+
+1. **Split by time segments:** Break into 30-minute chunks
+2. **Process separately:** Use multiple transcript entries
+3. **Merge results:** I'll combine them in the daily digest
+
+Would you like me to help split and process this long transcript?"
+
+```
+
+### Approval Workflow Issues
+```
+
+User: "I approved the digest but it didn't send"
+
+Agent: "Let me check the digest status and help resolve this:
+
+1. **Verify approval status:** Check if digest is marked as approved
+2. **Check email configuration:** Ensure email binding is properly configured
+3. **Recipient validation:** Verify recipient email addresses are valid
+
+_[Checks digest status]_
+
+Common solutions:
+
+- Re-approve if status isn't updated
+- Check Cloudflare Email Worker configuration
+- Verify DEFAULT_RECIPIENTS environment variable
+
+Would you like me to attempt sending the digest again?"
+
+```
+
+## 📈 Best Practices
+
+### Effective Transcript Management
+```
+
+User: "What are some best practices for managing transcripts?"
+
+Agent: "Here are the best practices I recommend:
+
+**Daily Workflow:**
+
+1. **Morning:** Review overnight webhook deliveries
+2. **Midday:** Process any manual transcripts
+3. **Evening:** Review and approve daily digest
+4. **Send:** Deliver approved digest to teams
+
+**Quality Control:**
+
+- Always review AI-extracted action items for accuracy
+- Verify participant names and ownership assignments
+- Edit summaries if important context is missing
+- Confirm topic tags are relevant and helpful
+
+**Team Organization:**
+
+- Use consistent teamId values (e.g., 'engineering', 'marketing')
+- Set up team-specific recipients for targeted delivery
+- Configure different approval workflows per team if needed
+
+**Automation Setup:**
+
+- Schedule daily digest finalization for optimal timing
+- Set up webhook integrations for automatic processing
+- Use HMAC signatures for security
+- Monitor webhook delivery success rates
+
+Would you like me to help set up any of these practices for your team?"
+
+```
+
+---
+
+These examples show the full range of capabilities available with the Transcripts Agent, from simple transcript processing to advanced multi-team automation workflows.
+```

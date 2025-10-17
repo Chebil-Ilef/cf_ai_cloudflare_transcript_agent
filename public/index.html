@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Transcripts Agent Dashboard</title>
+    <style>
+      body {
+        font-family: system-ui, Arial;
+        margin: 24px;
+      }
+      button {
+        margin: 6px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Transcripts Agent</h1>
+    <p>
+      Use the API endpoints: <code>/ingest</code>,
+      <code>/digest?team=&date=</code>, <code>/approve</code>,
+      <code>/send</code>
+    </p>
+    <div>
+      <button
+        onclick="fetch('/digest').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))"
+      >
+        View today's digest
+      </button>
+    </div>
+  </body>
+</html>

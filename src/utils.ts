@@ -130,15 +130,52 @@ export function cleanupMessages(messages: UIMessage[]): UIMessage[] {
  */
 export function extractSkillsFromCV(cvContent: string): string[] {
   const commonSkills = [
-    'JavaScript', 'TypeScript', 'React', 'Node.js', 'Python', 'Java', 'C++', 'C#',
-    'HTML', 'CSS', 'Angular', 'Vue.js', 'PHP', 'Ruby', 'Go', 'Rust', 'Swift',
-    'AWS', 'Azure', 'Google Cloud', 'Docker', 'Kubernetes', 'Git', 'SQL', 'MongoDB',
-    'PostgreSQL', 'MySQL', 'Redis', 'GraphQL', 'REST API', 'Microservices',
-    'Machine Learning', 'AI', 'Data Science', 'DevOps', 'CI/CD', 'Jenkins',
-    'Terraform', 'Ansible', 'Linux', 'Agile', 'Scrum', 'Project Management'
+    "JavaScript",
+    "TypeScript",
+    "React",
+    "Node.js",
+    "Python",
+    "Java",
+    "C++",
+    "C#",
+    "HTML",
+    "CSS",
+    "Angular",
+    "Vue.js",
+    "PHP",
+    "Ruby",
+    "Go",
+    "Rust",
+    "Swift",
+    "AWS",
+    "Azure",
+    "Google Cloud",
+    "Docker",
+    "Kubernetes",
+    "Git",
+    "SQL",
+    "MongoDB",
+    "PostgreSQL",
+    "MySQL",
+    "Redis",
+    "GraphQL",
+    "REST API",
+    "Microservices",
+    "Machine Learning",
+    "AI",
+    "Data Science",
+    "DevOps",
+    "CI/CD",
+    "Jenkins",
+    "Terraform",
+    "Ansible",
+    "Linux",
+    "Agile",
+    "Scrum",
+    "Project Management"
   ];
 
-  const foundSkills = commonSkills.filter(skill => 
+  const foundSkills = commonSkills.filter((skill) =>
     cvContent.toLowerCase().includes(skill.toLowerCase())
   );
 
@@ -148,7 +185,11 @@ export function extractSkillsFromCV(cvContent: string): string[] {
 /**
  * Generate email subject line for job application
  */
-export function generateEmailSubject(jobTitle: string, companyName: string, applicantName: string): string {
+export function generateEmailSubject(
+  jobTitle: string,
+  _companyName: string,
+  applicantName: string
+): string {
   return `Application for ${jobTitle} Position - ${applicantName}`;
 }
 
@@ -156,12 +197,14 @@ export function generateEmailSubject(jobTitle: string, companyName: string, appl
  * Generate professional email body for job application
  */
 export function generateApplicationEmailBody(
-  jobTitle: string, 
-  companyName: string, 
+  jobTitle: string,
+  companyName: string,
   recruiterName?: string
 ): string {
-  const greeting = recruiterName ? `Dear ${recruiterName},` : "Dear Hiring Manager,";
-  
+  const greeting = recruiterName
+    ? `Dear ${recruiterName},`
+    : "Dear Hiring Manager,";
+
   return `${greeting}
 
 I hope this email finds you well. I am writing to submit my application for the ${jobTitle} position at ${companyName}.
@@ -180,25 +223,30 @@ Best regards,
  * Calculate job match score based on skills overlap
  */
 export function calculateJobMatchScore(
-  cvSkills: string[], 
+  cvSkills: string[],
   jobRequirements: string[]
 ): number {
   if (jobRequirements.length === 0) return 0;
-  
-  const matchingSkills = cvSkills.filter(skill => 
-    jobRequirements.some(req => 
-      req.toLowerCase().includes(skill.toLowerCase()) ||
-      skill.toLowerCase().includes(req.toLowerCase())
+
+  const matchingSkills = cvSkills.filter((skill) =>
+    jobRequirements.some(
+      (req) =>
+        req.toLowerCase().includes(skill.toLowerCase()) ||
+        skill.toLowerCase().includes(req.toLowerCase())
     )
   );
-  
+
   return Math.round((matchingSkills.length / jobRequirements.length) * 100);
 }
 
 /**
  * Format salary range for display
  */
-export function formatSalaryRange(min: number, max: number, currency = "$"): string {
+export function formatSalaryRange(
+  min: number,
+  max: number,
+  currency = "$"
+): string {
   const formatNumber = (num: number) => {
     if (num >= 1000000) {
       return `${(num / 1000000).toFixed(1)}M`;
@@ -207,7 +255,7 @@ export function formatSalaryRange(min: number, max: number, currency = "$"): str
     }
     return num.toString();
   };
-  
+
   return `${currency}${formatNumber(min)} - ${currency}${formatNumber(max)}`;
 }
 

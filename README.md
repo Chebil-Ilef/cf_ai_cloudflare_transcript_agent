@@ -1,118 +1,133 @@
-# 🔍 Job Search AI Agent
+# 📄 Transcripts Agent
 
-An intelligent job search assistant that helps you find perfect job opportunities, generate personalized cover letters, and manage your entire job application process. Built with React, TypeScript, and the Vercel AI SDK.
+**AI-powered meeting transcript processing and daily digest generation** built with [Cloudflare Agents SDK](https://github.com/cloudflare/agents-sdk) and deployed on Cloudflare Workers.
+
+Transform your meeting transcripts into actionable insights with automated summarization, action item extraction, and team-based daily digest delivery.
+
+---
 
 ## ✨ Features
 
-### 🎯 Job Search & Matching
-- **Smart Job Search**: Find top 10 best matching jobs based on your CV and preferences
-- **AI-Powered Matching**: Advanced algorithm considers skills, experience, location, and salary preferences
-- **Real-time Market Analysis**: Get insights on job market trends, salary ranges, and skill demands
-- **Remote Work Support**: Filter for remote, hybrid, or on-site positions
+### 📄 Transcript Processing
 
-### 📝 Cover Letter Generation
-- **Personalized Cover Letters**: AI generates custom cover letters tailored to specific job descriptions
-- **Multiple Tones**: Choose from professional, friendly, or formal writing styles
-- **PDF Export**: Convert cover letters to professional PDF format
-- **Edit & Customize**: Built-in editor to refine generated content
+- **Multi-source ingestion**: Support for Zoom, Google Meet, Teams, webhooks, and manual uploads
+- **Automatic summarization**: AI-powered bullet-point summaries highlighting decisions and outcomes
+- **Action item extraction**: Identify tasks, owners, and due dates from meeting discussions
+- **Topic tagging**: Categorize meetings with relevant tags (billing, infrastructure, security, etc.)
+- **PII redaction**: Optional privacy protection by removing sensitive information
 
-### 📧 Application Management
-- **Auto Email Sending**: Send applications directly to recruiters with CV and cover letter attachments
-- **Application Tracking**: Keep track of all your applications and their status
-- **Follow-up Reminders**: Schedule reminders for follow-ups and interviews
-- **Status Management**: Track progress from application to offer
+### 📊 Daily Digest Generation
 
-### 💼 Additional Tools
-- **CV Analysis**: Extract skills and qualifications from your resume
-- **Interview Scheduling**: Set reminders for upcoming interviews
-- **Market Intelligence**: Analyze competition and opportunities in your field
-- **Career Insights**: Get personalized career advice and growth recommendations
+- **Team-based organization**: Separate digests for different teams
+- **Automated compilation**: Daily aggregation of all meetings with summaries and action items
+- **Human-in-the-loop approval**: Review and edit digests before sending
+- **Email delivery**: Send approved digests to team members and stakeholders
 
-## Prerequisites
+### 🔄 Workflow Automation
 
-- Cloudflare account
-- OpenAI API key
+- **Scheduled processing**: Set up daily digest finalization at specific times
+- **Real-time processing**: Process transcripts as they're received via webhooks
+- **Approval workflows**: Require human confirmation for sensitive operations
+- **Persistent storage**: Maintain digest history using Cloudflare Durable Objects and KV
 
-## Quick Start
+### 🛡️ Enterprise Ready
 
-1. Create a new project:
+- **Scalable architecture**: Built on Cloudflare's global edge network
+- **Security first**: HMAC signature verification for webhooks
+- **Privacy protection**: Optional PII redaction before AI processing
+- **Audit trail**: Complete history of transcript processing and digest approvals
 
-```bash
-npx create-cloudflare@latest --template cloudflare/agents-starter
-```
-
-2. Install dependencies:
-
-```bash
-npm install
-```
+---
 
 ## 🚀 Quick Start
 
-1. **Clone and Install**:
+### 1. Clone and Setup
+
 ```bash
+git clone https://github.com/Chebil-Ilef/ysf-clouddflare.git
+cd ysf-clouddflare
 npm install
 ```
 
-2. **Set up your environment**:
+### 2. Configure Environment
 
-Create a `.dev.vars` file in the root directory:
+```bash
+# Copy example environment file
+cp .dev.vars.example .dev.vars
 
-```env
+# Edit .dev.vars with your settings
 OPENAI_API_KEY=your_openai_api_key_here
+WEBHOOK_SECRET=your_webhook_secret
+DEFAULT_RECIPIENTS=team@company.com
 ```
 
-3. **Run locally**:
-```bash
-npm start
-```
+### 3. Deploy to Cloudflare
 
-4. **Deploy to Cloudflare**:
 ```bash
+# Login to Cloudflare (if not already)
+npx wrangler login
+
+# Deploy to production
 npm run deploy
 ```
 
+### 4. Set Production Secrets
+
+```bash
+# Upload your environment variables as secrets
+npx wrangler secret bulk .dev.vars
+```
+
+---
+
 ## 📖 How to Use
 
-### 🔍 Job Search
-1. **Start a conversation**: "I'm looking for software engineering jobs"
-2. **Provide your CV**: Share your resume content or key qualifications
-3. **Specify preferences**: Location, salary range, remote work, experience level
-4. **Review results**: Get top 10 matching jobs with detailed information
-5. **Take action**: Apply directly or generate custom cover letters
+### 📄 Processing Transcripts
 
-### 📝 Cover Letter Generation
-1. **Find a job**: Either through search or provide a job description
-3. **Generate letter**: AI creates a personalized cover letter
-4. **Customize**: Edit the content using the built-in editor
-5. **Export**: Download as PDF for professional presentation
-6. **Send**: Email directly to recruiters with attachments
+1. **Upload transcript**: Provide meeting details and transcript text
+2. **AI Processing**: Automatic summarization and action item extraction
+3. **Review results**: Check generated summaries and extracted action items
+4. **Confirm processing**: Approve the processing to add to daily digest
 
-### 📊 Application Tracking
-1. **Add applications**: Track all your job applications in one place
-2. **Update status**: Move applications through the pipeline (applied → screening → interview → offer)
-3. **Set reminders**: Schedule follow-ups and interview reminders
-4. **View analytics**: See your application success rate and pipeline health
+### 📊 Managing Daily Digests
+
+1. **View digest**: Check the daily compilation of all processed meetings
+2. **Review content**: Verify summaries, action items, and topic tags
+3. **Edit if needed**: Make adjustments before approval
+4. **Approve digest**: Mark digest as ready for sending
+5. **Send to team**: Deliver via email to configured recipients
+
+### 🔄 Setting Up Automation
+
+1. **Configure webhooks**: Set up meeting platforms to send transcripts automatically
+2. **Schedule digests**: Set daily finalization times (e.g., 8:00 AM)
+3. **Team organization**: Configure separate teams with different recipients
+4. **Approval workflows**: Set up human-in-the-loop confirmation processes
 
 ### 💡 Example Conversations
 
-**Job Search**:
+**Processing a Transcript**:
+
 ```
-You: "Help me find remote software engineering jobs paying $80k-120k"
-Agent: "I'd be happy to help you find remote software engineering positions! To give you the best matches, could you please share your CV or key qualifications?"
+You: "I have a meeting transcript to process from our sprint planning session"
+Agent: "I'll help you process that transcript! Please provide the meeting details and transcript content, and I'll generate summaries and extract action items."
 ```
 
-**Cover Letter**:
+**Viewing Daily Digest**:
+
 ```
-You: "Generate a cover letter for this job: [paste job description]"
-Agent: "I'll create a personalized cover letter for this position. I'll need your CV content to tailor it properly."
+You: "Show me today's digest for the engineering team"
+Agent: "Here's today's digest with 3 meetings processed, including 5 action items and summaries organized by topics."
 ```
 
-**Application Tracking**:
+**Approving and Sending**:
+
 ```
-You: "Track my application to TechCorp for Senior Developer role"
-Agent: "I'll add this to your application tracker. Let me create an entry for your TechCorp Senior Developer application."
+You: "Approve and send today's digest to the team"
+Agent: "I'll mark the digest as approved and send it to the configured team recipients. Please confirm this action."
 ```
+
+---
 
 ## 🛠️ Project Structure
 
@@ -120,250 +135,210 @@ Agent: "I'll add this to your application tracker. Let me create an entry for yo
 ├── src/
 │   ├── app.tsx                    # Main chat UI
 │   ├── server.ts                  # AI agent logic
-│   ├── tools.ts                   # Job search tools
+│   ├── tools.ts                   # Transcript processing tools
 │   ├── utils.ts                   # Helper functions
+│   ├── agent/
+│   │   └── TranscriptsAgent.ts    # Main agent implementation
+│   ├── do/
+│   │   └── DigestStateDO.ts       # Durable Object for state management
+│   ├── tools/
+│   │   ├── ingest.ts              # Transcript ingestion
+│   │   ├── chunk.ts               # Text chunking
+│   │   ├── summarize.ts           # AI summarization
+│   │   ├── extractActions.ts      # Action item extraction
+│   │   ├── tagTopics.ts           # Topic tagging
+│   │   ├── redact.ts              # PII redaction
+│   │   └── persist.ts             # Data persistence
 │   ├── components/
-│   │   ├── job-card/              # Job listing display
-│   │   ├── job-search-results/    # Search results UI
-│   │   ├── cover-letter-display/  # Cover letter viewer
-│   │   ├── application-tracker/   # Application management
-│   │   └── ...                    # Other UI components
+│   │   ├── transcript-display/    # Transcript viewer
+│   │   ├── digest-display/        # Digest viewer
+│   │   └── ...                    # UI components
 │   └── styles.css                 # Styling
+├── wrangler.jsonc                 # Cloudflare configuration
+├── package.json                   # Dependencies
+└── README.md                      # This file
 ```
-
-## 🔧 Customization Guide
-
-### Available Tools
-
-The job search agent comes with these pre-built tools:
-
-| Tool | Type | Description |
-|------|------|-------------|
-| `searchJobs` | Confirmation Required | Search for jobs based on CV and preferences |
-| `generateCoverLetter` | Confirmation Required | Generate personalized cover letters |
-| `generatePDFCoverLetter` | Confirmation Required | Convert cover letters to PDF |
-| `sendApplicationEmail` | Confirmation Required | Send applications via email |
-| `analyzeJobMarket` | Auto-Execute | Analyze job market trends and salary data |
-| `trackApplication` | Auto-Execute | Manage job application pipeline |
-
-### Adding New Job Search Tools
-
-Add new tools in `tools.ts`:
-
-```typescript
-// Example: LinkedIn profile analyzer
-const analyzeLinkedInProfile = tool({
-  description: "Analyze LinkedIn profile for job search optimization",
-  inputSchema: z.object({
-    linkedinUrl: z.string().describe("LinkedIn profile URL"),
-    targetRole: z.string().optional().describe("Target job role")
-  })
-  // No execute function = requires confirmation
-});
-
-// Example: Salary negotiation advisor  
-const getSalaryAdvice = tool({
-  description: "Get salary negotiation advice based on market data",
-  inputSchema: z.object({
-    jobTitle: z.string(),
-    location: z.string(),
-    experience: z.number(),
-    currentSalary: z.number().optional()
-  }),
-  execute: async ({ jobTitle, location, experience, currentSalary }) => {
-    // Auto-executing tool logic here
-    return generateSalaryAdvice(jobTitle, location, experience, currentSalary);
-  }
-});
-```
-
-### Implementing Tool Confirmations
-
-For tools requiring user confirmation, add to the `executions` object:
-
-```typescript
-export const executions = {
-  analyzeLinkedInProfile: async ({ linkedinUrl, targetRole }) => {
-    // Scrape LinkedIn profile (respecting terms of service)
-    const profileData = await scrapeLinkedInProfile(linkedinUrl);
-    return analyzeProfileForJobSearch(profileData, targetRole);
-  },
-  
-  // Existing job search tools...
-  searchJobs: async ({ cvContent, jobTitle, location, ...params }) => {
-    // Call job search APIs (Indeed, LinkedIn, Glassdoor, etc.)
-    const jobs = await searchJobAPIs(params);
-    return rankJobsByMatch(jobs, cvContent);
-  }
-};
-```
-
-### Integrating Real Job APIs
-
-To connect with real job search APIs, update the `searchJobs` execution:
-
-```typescript
-// In executions object
-searchJobs: async (params) => {
-  const jobSources = [
-    await searchIndeed(params),
-    await searchLinkedIn(params), 
-    await searchGlassdoor(params),
-    await searchRemoteOK(params)
-  ];
-  
-  const allJobs = jobSources.flat();
-  const rankedJobs = rankJobsByRelevance(allJobs, params.cvContent);
-  return rankedJobs.slice(0, 10);
-}
-```
-
-### Email Integration
-
-For real email sending, configure an email service:
-
-```typescript
-// Using SendGrid, Mailgun, or similar
-sendApplicationEmail: async (emailData) => {
-  const emailService = new EmailService(process.env.EMAIL_API_KEY);
-  
-  return await emailService.send({
-    to: emailData.recruiterEmail,
-    from: emailData.applicantEmail,
-    subject: emailData.subject,
-    html: emailData.emailBody,
-    attachments: [
-      { filename: 'CV.pdf', content: emailData.cvAttachment },
-      { filename: 'CoverLetter.pdf', content: emailData.coverLetterAttachment }
-    ]
-  });
-}
-```
-
-### Use a different AI model provider
-
-The starting [`server.ts`](https://github.com/cloudflare/agents-starter/blob/main/src/server.ts) implementation uses the [`ai-sdk`](https://sdk.vercel.ai/docs/introduction) and the [OpenAI provider](https://sdk.vercel.ai/providers/ai-sdk-providers/openai), but you can use any AI model provider by:
-
-1. Installing an alternative AI provider for the `ai-sdk`, such as the [`workers-ai-provider`](https://sdk.vercel.ai/providers/community-providers/cloudflare-workers-ai) or [`anthropic`](https://sdk.vercel.ai/providers/ai-sdk-providers/anthropic) provider:
-2. Replacing the AI SDK with the [OpenAI SDK](https://github.com/openai/openai-node)
-3. Using the Cloudflare [Workers AI + AI Gateway](https://developers.cloudflare.com/ai-gateway/providers/workersai/#workers-binding) binding API directly
-
-For example, to use the [`workers-ai-provider`](https://sdk.vercel.ai/providers/community-providers/cloudflare-workers-ai), install the package:
-
-```sh
-npm install workers-ai-provider
-```
-
-Add an `ai` binding to `wrangler.jsonc`:
-
-```jsonc
-// rest of file
-  "ai": {
-    "binding": "AI"
-  }
-// rest of file
-```
-
-Replace the `@ai-sdk/openai` import and usage with the `workers-ai-provider`:
-
-```diff
-// server.ts
-// Change the imports
-- import { openai } from "@ai-sdk/openai";
-+ import { createWorkersAI } from 'workers-ai-provider';
-
-// Create a Workers AI instance
-+ const workersai = createWorkersAI({ binding: env.AI });
-
-// Use it when calling the streamText method (or other methods)
-// from the ai-sdk
-- const model = openai("gpt-4o-2024-11-20");
-+ const model = workersai("@cf/deepseek-ai/deepseek-r1-distill-qwen-32b")
-```
-
-Commit your changes and then run the `agents-starter` as per the rest of this README.
-
-### Modifying the UI
-
-The chat interface is built with React and can be customized in `app.tsx`:
-
-- Modify the theme colors in `styles.css`
-- Add new UI components in the chat container
-- Customize message rendering and tool confirmation dialogs
-- Add new controls to the header
-
-### Example Use Cases
-
-1. **Customer Support Agent**
-   - Add tools for:
-     - Ticket creation/lookup
-     - Order status checking
-     - Product recommendations
-     - FAQ database search
-
-## 🚀 Deployment
-
-Deploy to Cloudflare Workers:
-
-```bash
-npm run deploy
-```
-
-For production, add your environment variables:
-
-```bash
-wrangler secret put OPENAI_API_KEY
-wrangler secret put EMAIL_API_KEY
-# ... other secrets
-```
-
-## 📊 Environment Variables
-
-Create a `.dev.vars` file with these variables:
-
-```env
-# Required
-OPENAI_API_KEY=your_openai_api_key
-
-# Optional - for real integrations
-EMAIL_API_KEY=your_email_service_api_key
-LINKEDIN_API_KEY=your_linkedin_api_key
-INDEED_API_KEY=your_indeed_api_key
-GLASSDOOR_API_KEY=your_glassdoor_api_key
-
-# For PDF generation
-PDF_SERVICE_URL=your_pdf_generation_service
-```
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch  
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
-
-## 🔮 Roadmap
-
-- [ ] **Real Job API Integration**: Connect with major job boards
-- [ ] **Advanced CV Analysis**: AI-powered resume optimization  
-- [ ] **Interview Preparation**: Mock interviews and question practice
-- [ ] **Salary Analytics**: Real-time compensation data
-- [ ] **Company Research**: Automated company background research
-- [ ] **Network Analysis**: LinkedIn connection insights
-- [ ] **Mobile App**: React Native companion app
-- [ ] **Chrome Extension**: Apply directly from job sites
-
-## 📚 Learn More
-
-- [`agents`](https://github.com/cloudflare/agents/blob/main/packages/agents/README.md)
-- [Cloudflare Agents Documentation](https://developers.cloudflare.com/agents/)
-- [Cloudflare Workers Documentation](https://developers.cloudflare.com/workers/)
-
-## 📝 License
-
-MIT License - see LICENSE file for details
 
 ---
 
-**🎯 Start your job search journey today!**
+## 🔧 Configuration
+
+### Cloudflare Bindings (wrangler.jsonc)
+
+```jsonc
+{
+  "name": "transcripts-agent",
+  "main": "src/server.ts",
+
+  "ai": { "binding": "AI" },
+
+  "kv_namespaces": [{ "binding": "IDX_KV", "id": "your_kv_namespace_id" }],
+
+  "durable_objects": {
+    "bindings": [{ "name": "DIGEST_STATE", "class_name": "DigestStateDO" }]
+  },
+
+  "email": { "binding": "EMAIL" },
+
+  "vars": {
+    "WEBHOOK_SECRET": "your_webhook_secret",
+    "DEFAULT_RECIPIENTS": "team@company.com"
+  }
+}
+```
+
+### Available Tools
+
+| Tool                         | Type                  | Description                                            |
+| ---------------------------- | --------------------- | ------------------------------------------------------ |
+| `ingestMeetingTranscript`    | Confirmation Required | Process meeting transcripts into summaries and actions |
+| `getDailyDigest`             | Auto-Execute          | Retrieve daily digest for specific team and date       |
+| `approveDailyDigest`         | Confirmation Required | Approve daily digest for sending                       |
+| `sendApprovedDigest`         | Confirmation Required | Send approved digest via email                         |
+| `scheduleDigestFinalization` | Auto-Execute          | Schedule daily digest compilation                      |
+
+### Environment Variables
+
+| Variable             | Required | Description                                |
+| -------------------- | -------- | ------------------------------------------ |
+| `OPENAI_API_KEY`     | Yes      | OpenAI API key for AI processing           |
+| `WEBHOOK_SECRET`     | Yes      | HMAC secret for webhook verification       |
+| `DEFAULT_RECIPIENTS` | No       | Default email recipients (comma-separated) |
+
+---
+
+## 🔌 Integration Examples
+
+### Webhook Integration
+
+```bash
+# Send transcript via webhook
+curl -X POST https://your-agent.your-subdomain.workers.dev/ingest \
+  -H "Content-Type: application/json" \
+  -H "X-Signature: sha256=your_hmac_signature" \
+  -d '{
+    "transcript": {
+      "id": "meeting-123",
+      "meetingId": "zoom-456",
+      "title": "Sprint Planning",
+      "dateISO": "2025-01-15",
+      "participants": ["Alice", "Bob", "Charlie"],
+      "text": "Meeting transcript content...",
+      "source": "zoom"
+    },
+    "teamId": "engineering"
+  }'
+```
+
+### API Access
+
+```javascript
+// Get daily digest
+const digest = await fetch("/digest?team=engineering&date=2025-01-15");
+
+// Approve digest
+await fetch("/approve", {
+  method: "POST",
+  body: JSON.stringify({
+    teamId: "engineering",
+    dateISO: "2025-01-15",
+    edits: {
+      /* optional modifications */
+    }
+  })
+});
+
+// Send digest
+await fetch("/send", {
+  method: "POST",
+  body: JSON.stringify({
+    teamId: "engineering",
+    dateISO: "2025-01-15",
+    to: "team-lead@company.com"
+  })
+});
+```
+
+---
+
+## 🌟 Advanced Features
+
+### Custom AI Models
+
+You can use different AI providers by modifying the model configuration in `src/server.ts`:
+
+```typescript
+// Switch to different OpenAI models
+const model = openai("gpt-4-turbo");
+
+// Or use Cloudflare Workers AI
+import { createCloudflareAI } from "@ai-sdk/cloudflare";
+const cloudflare = createCloudflareAI({ apiToken: env.CLOUDFLARE_API_TOKEN });
+const model = cloudflare("@cf/meta/llama-3.1-8b-instruct");
+```
+
+### Multi-team Configuration
+
+Set up different teams with separate configurations:
+
+```typescript
+// Team-specific recipients
+const teamRecipients = {
+  engineering: ["eng-team@company.com"],
+  marketing: ["marketing-team@company.com"],
+  sales: ["sales-team@company.com"]
+};
+
+// Team-specific processing rules
+const teamRules = {
+  engineering: {
+    requiresPII: false,
+    topicTags: ["tech", "sprint", "deployment"]
+  },
+  sales: { requiresPII: true, topicTags: ["deals", "customers", "revenue"] }
+};
+```
+
+---
+
+## 🤝 Contributing
+
+We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
+
+### Development Setup
+
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Run tests
+npm test
+
+# Format code
+npm run format
+
+# Lint code
+npm run lint
+```
+
+---
+
+## 📜 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 🔗 Links
+
+- **Live Demo**: [transcripts-agent.your-subdomain.workers.dev](https://transcripts-agent.your-subdomain.workers.dev)
+- **Documentation**: [Cloudflare Agents SDK](https://github.com/cloudflare/agents-sdk)
+- **Issues**: [GitHub Issues](https://github.com/Chebil-Ilef/ysf-clouddflare/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/Chebil-Ilef/ysf-clouddflare/discussions)
+
+---
+
+**Built with ❤️ using Cloudflare Agents SDK**

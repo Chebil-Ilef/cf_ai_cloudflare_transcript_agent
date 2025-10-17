@@ -29,10 +29,9 @@ import {
 // List of tools that require human confirmation
 // NOTE: this should match the tools that don't have execute functions in tools.ts
 const toolsRequiringConfirmation: (keyof typeof tools)[] = [
-  "searchJobs",
-  "generateCoverLetter", 
-  "generatePDFCoverLetter",
-  "sendApplicationEmail"
+  "ingestMeetingTranscript",
+  "approveDailyDigest",
+  "sendApprovedDigest"
 ];
 
 export default function Chat() {
@@ -204,19 +203,25 @@ export default function Chat() {
                   <div className="bg-[#F48120]/10 text-[#F48120] rounded-full p-3 inline-flex">
                     <Robot size={24} />
                   </div>
-                  <h3 className="font-semibold text-lg">Welcome to AI Chat</h3>
+                  <h3 className="font-semibold text-lg">
+                    Welcome to Transcripts Agent
+                  </h3>
                   <p className="text-muted-foreground text-sm">
-                    Start a conversation with your AI assistant. Try asking
-                    about:
+                    Start processing meeting transcripts and generating daily
+                    digests. Try:
                   </p>
                   <ul className="text-sm text-left space-y-2">
                     <li className="flex items-center gap-2">
                       <span className="text-[#F48120]">•</span>
-                      <span>Weather information for any city</span>
+                      <span>Process meeting transcripts</span>
                     </li>
                     <li className="flex items-center gap-2">
                       <span className="text-[#F48120]">•</span>
-                      <span>Local time in different locations</span>
+                      <span>Generate daily digest summaries</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="text-[#F48120]">•</span>
+                      <span>Extract action items from meetings</span>
                     </li>
                   </ul>
                 </div>
