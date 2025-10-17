@@ -2,7 +2,7 @@
 
 This document shows example conversations and workflows with the Transcripts AI Agent.
 
-## 📄 Transcript Processing Workflow
+## Transcript Processing Workflow
 
 ### Processing a Single Meeting Transcript
 
@@ -79,7 +79,7 @@ Agent: *[Processes each transcript using ingestMeetingTranscript tool]*
 All have been added to today's digest. Total: 12 action items identified across 3 meetings."
 ```
 
-## 📊 Daily Digest Management Workflow
+## Daily Digest Management Workflow
 
 ### Viewing and Approving Daily Digest
 
@@ -227,7 +227,7 @@ The transcript processing will work exactly the same once the webhook delivers t
 
 ```
 
-## 💡 Advanced Usage Patterns
+## Advanced Usage Patterns
 
 ### Multi-Team Organization
 ```
@@ -362,7 +362,7 @@ Would you like me to attempt sending the digest again?"
 
 ```
 
-## 📈 Best Practices
+## Best Practices
 
 ### Effective Transcript Management
 ```
@@ -399,10 +399,3 @@ Agent: "Here are the best practices I recommend:
 - Monitor webhook delivery success rates
 
 Would you like me to help set up any of these practices for your team?"
-
-```
-
----
-
-These examples show the full range of capabilities available with the Transcripts Agent, from simple transcript processing to advanced multi-team automation workflows.
-```
